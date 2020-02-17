@@ -34,21 +34,19 @@ class Menu extends Component {
       amount: this.state.amount,
       type: this.state.type,
       author: this.props.user.displayName,
-      date: new Date()
+      date: Firebase.database.ServerValue.TIMESTAMP
     });
     Firebase.database()
       .ref("/")
       .set(expenses);
-    console.log("DATA SAVED");
   };
 
   getExpensesData = () => {
     let ref = Firebase.database().ref("/");
     ref.on("value", snapshot => {
-      const expenses = snapshot.val();
+      let expenses = snapshot.val();
       this.setState({ expenses });
     });
-    console.log("DATA RETRIEVED");
   };
 
   componentDidMount() {
